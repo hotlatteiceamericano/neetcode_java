@@ -27,11 +27,26 @@ dependencies {
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 
 tasks.named('test') {
-    // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        showExceptions true
+        showCauses true
+        showStackTraces true
+        exceptionFormat "full"
+    }
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "\nResults: ${result.resultType} " +
+                "(${result.testCount} tests, " +
+                "${result.successfulTestCount} passed, " +
+                "${result.failedTestCount} failed, " +
+                "${result.skippedTestCount} skipped)"
+        }
+    }
 }
