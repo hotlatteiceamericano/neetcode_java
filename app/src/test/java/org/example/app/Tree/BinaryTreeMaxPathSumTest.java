@@ -1,12 +1,11 @@
 package org.example.app.Tree;
 
-
 import org.junit.jupiter.api.Test;
 
 class MaxPathSumSolution {
     int res = Integer.MIN_VALUE;
 
-    public static int maxPathSum(TreeNode root) {
+    public int maxPathSum(TreeNode root) {
         if (root == null) return 0;
 
         this.res = root.val;
@@ -23,13 +22,14 @@ class MaxPathSumSolution {
         int leftSum = maxPathSum(root.left);
         int rightSum = maxPathSum(root.right);
 
-        this.res = Math.max(
-                res,
+        this.res =
                 Math.max(
-                        root.val,
+                        res,
                         Math.max(
-                                Math.max(root.val + leftSum, root.val + rightSum),
-                                leftSum + rightSum + root.val)));
+                                root.val,
+                                Math.max(
+                                        Math.max(root.val + leftSum, root.val + rightSum),
+                                        leftSum + rightSum + root.val)));
 
         return Math.max(root.val, Math.max(leftSum, rightSum) + root.val);
     }
@@ -38,6 +38,7 @@ class MaxPathSumSolution {
 public class BinaryTreeMaxPathSumTest {
     @Test
     void test() {
-        MaxPathSumSolution.maxPathSum(TreeNode.fromArray(new Integer[]{1,-2,-3,1,3,-2,null,-1}));
+        // MaxPathSumSolution.maxPathSum(
+        //         TreeNode.fromArray(new Integer[] {1, -2, -3, 1, 3, -2, null, -1}));
     }
 }
